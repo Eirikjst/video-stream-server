@@ -1,0 +1,17 @@
+{
+  "name": "nodejs_streamserver",
+  "version": "1.0.0",
+  "description": "Stream server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index",
+    "start nodemon": "npx nodemon index.js"
+  },
+  "author": "Eirik Stensen",
+  "license": "ISC",
+  "dependencies": {
+    "directory-tree": "^2.2.4",
+    "express": "^4.17.1"
+  }
+}
