@@ -13,24 +13,30 @@ $(document).ready(function() {
     });
 });
 
+let testlist = [];
+
 function displayData(data) {
-    data.forEach(e => {
-        let result = `<li id="${e.name}">${e.name}` + makeList(e.children)
-        $(`#list`).append(`${result}</li>`);
-    });
+    makeList(data);
+    $(`#list`).append(testlist.join(''));
 }
 
 function makeList(data) {
-    let temp = "";
-    data.forEach(child => {
-        if(child.type == "file"){
-            temp = temp + `<li video-file-path="${child.path}" video-file-size="${child.size}">${child.name}</li>`;
+    testlist.push(`<ul>`);
+    $.each(data, function(attribute, val) {
+        if (val.type == "file") {
+            testlist.push(`<li video-file-path="${val.path}" video-file-size="${val.size}">` + val.name);
+        } else {
+            testlist.push(`<li>` + val.name);
         }
-    }); 
-    return `<ul>`+temp+`</ul>`;
+        if (val.children) {
+            makeList(val.children);
+        }
+        testlist.push(`</li>`);
+    });
+    testlist.push(`</ul>`);
 }
 
-function clickListElements(){
+function clickListElements() {
     $('li').click(function (e) {
         e.stopPropagation();
         if (this.getElementsByTagName("ul")[0].style.display == "block")
