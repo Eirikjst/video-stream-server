@@ -1,13 +1,13 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
         url: '/tree',
         type: 'GET',
         contentType: 'application/json',
-        success: function(data){
+        success: function (data) {
             displayData(data);
             clickListElements();
         },
-        error: function(err){
+        error: function (err) {
             console.log(err);
         }
     });
@@ -17,14 +17,15 @@ let testlist = [];
 
 function displayData(data) {
     makeList(data);
-    $(`#list`).append(testlist.join(''));
+    $(`body`).append(testlist.join(''));
 }
 
 function makeList(data) {
     testlist.push(`<ul>`);
-    $.each(data, function(attribute, val) {
+    $.each(data, function (attribute, val) {
+        //checks if file, adds path and size to <li> element if true
         if (val.type == "file") {
-            testlist.push(`<li video-file-path="${val.path}" video-file-size="${val.size}">` + val.name);
+            testlist.push(`<li class='video_file' video-file-path="${val.path}" video-file-size="${val.size}">` + val.name);
         } else {
             testlist.push(`<li>` + val.name);
         }
@@ -36,12 +37,20 @@ function makeList(data) {
     testlist.push(`</ul>`);
 }
 
-function clickListElements() {
+function clickHandler() {
     $('li').click(function (e) {
         e.stopPropagation();
-        if (this.getElementsByTagName("ul")[0].style.display == "block")
-            $(this).find("ul").slideUp();
-        else
-            $(this).children(":first").slideDown();
+        if ($(this).attr('video-file-size')){
+            //do something...
+            console.log($(this).attr('video-file-size'))
+            console.log($(this).attr('video-file-path'))
+        }
+        if(this.getElementsByTagName("ul")[0] !== undefined){
+            if (this.getElementsByTagName("ul")[0].style.display == "block") {
+                $(this).find('ul').slideUp();
+            } else {
+                $(this).children(":first").slideDown();
+            }
+        }
     });
 }
