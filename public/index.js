@@ -5,7 +5,7 @@ $(document).ready(function () {
         contentType: 'application/json',
         success: function (data) {
             displayData(data);
-            clickListElements();
+            clickHandler();
         },
         error: function (err) {
             console.log(err);
@@ -13,28 +13,28 @@ $(document).ready(function () {
     });
 });
 
-let testlist = [];
+let newList = [];
 
 function displayData(data) {
     makeList(data);
-    $(`body`).append(testlist.join(''));
+    $(`body`).append(newList.join(''));
 }
 
 function makeList(data) {
-    testlist.push(`<ul>`);
+    newList.push(`<ul>`);
     $.each(data, function (attribute, val) {
         //checks if file, adds path and size to <li> element if true
         if (val.type == "file") {
-            testlist.push(`<li class='video_file' video-file-path="${val.path}" video-file-size="${val.size}">` + val.name);
+            newList.push(`<li class='video_file' video-file-path="${val.path}" video-file-size="${val.size}">` + val.name);
         } else {
-            testlist.push(`<li>` + val.name);
+            newList.push(`<li>` + val.name);
         }
         if (val.children) {
             makeList(val.children);
         }
-        testlist.push(`</li>`);
+        newList.push(`</li>`);
     });
-    testlist.push(`</ul>`);
+    newList.push(`</ul>`);
 }
 
 function clickHandler() {
