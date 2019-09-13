@@ -1,0 +1,21 @@
+body {
+    background-color: black
+}
+
+ul>li>ul {
+    display: none;
+}
+
+h1 {
+    color: white;
+    font-size: 50px;
+}
+
+ul {
+    color: white;
+}
+
+li.video_file {
+    color: blue;
+    
+}
