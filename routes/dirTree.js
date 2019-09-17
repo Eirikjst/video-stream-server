@@ -7,7 +7,6 @@ module.exports = function (app, config) {
     app.get(config.baseUrl+'tree', function (req, res) {
         let videoFiles = [], subtitles = [], pathToFolders = [];
         try {
-            //fti = JSON.parse(fs.readFileSync('./folderDir.json'));
             //Push each path from json file to array
             config.folders.forEach(e => {
                 let temp = "";
