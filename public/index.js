@@ -3,8 +3,7 @@ $(document).ready(function () {
         url: '/tree',
         type: 'GET',
         contentType: 'application/json',
-        success: function (data) {
-            console.log(data)
+        success: function (data, textStatus, jqXHR) {
             displayData(data);
             clickHandler();
         },
@@ -42,11 +41,12 @@ function clickHandler() {
     $('li').click(function (e) {
         e.stopPropagation();
         if ($(this).attr('video-file-size')){
-            //do something...
-            console.log($(this).attr('video-file-size'))
-            console.log($(this).attr('video-file-path'))
-            console.log($(this).attr('video-file-extension'))
-            startStream($(this).attr('video-file-size'), $(this).attr('video-file-path'), $(this).attr('video-file-extension'))
+            //temp solution before fix with filesize where video-file-size % == 0 in backend
+            if ($(this).attr('video-file-size') % 2 == 1){
+                startStream($(this).attr('video-file-size'), $(this).attr('video-file-path'), $(this).attr('video-file-extension'));
+            } else {
+                alert("bug with filesize, fix inc...");
+            }
         }
         if(this.getElementsByTagName("ul")[0] !== undefined){
             if (this.getElementsByTagName("ul")[0].style.display == "block") {
@@ -61,7 +61,7 @@ function clickHandler() {
 //TODO: implement video tag in index.html and feed the stream to tag
 function startStream(size, path, extension){
     $.ajax({
-        url: '/stream',
+        url: '/setFileVariables',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -69,8 +69,8 @@ function startStream(size, path, extension){
             video_file_path: path,
             video_file_extension: extension
         }),
-        success: function() {
-            console.log('ok')
+        success: function(data, textStatus, jqXHR) {
+            window.location.href = window.location.origin+'/video'
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.responseText);
