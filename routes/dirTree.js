@@ -5,7 +5,7 @@ const directorytree = require('directory-tree');
  */
 module.exports = function (app, config) {
     app.get(config.baseUrl+'tree', function (req, res) {
-        let videoFiles = [], subtitles = [], pathToFolders = [];
+        let videoFiles = [], /*subtitles = [],*/ pathToFolders = [];
         try {
             //Push each path from json file to array
             config.folders.forEach(e => {
@@ -24,7 +24,7 @@ module.exports = function (app, config) {
             }*/
             pathToFolders.forEach(e => {
                 videoFiles.push(directorytree(e, { exclude: /\.srt$/ }));
-                subtitles.push(directorytree(e), { extensions: /\.srt/ });
+                //subtitles.push(directorytree(e), { extensions: /\.srt/ });
             })
         } catch (err) {
             console.error(err.stack);
