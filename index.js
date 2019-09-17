@@ -1,11 +1,14 @@
-const express = require('express');
+let bodyParser = require('body-parser');
 const config = require('./config');
+const express = require('express');
 const router = require('./routes/baseRoute')
 
 const app = express();
-require('./routes/dirTree')(app, config);
-
 app.use(config.baseUrl, router);
+app.use(bodyParser.json());
+
+require('./routes/dirTree')(app, config);
+require('./routes/videoStream')(app, config);
 
 app.listen(config.port, (err) => {
     if (err){
