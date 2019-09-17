@@ -10,4 +10,8 @@ router.get(config.baseUrl, (req, res) => {
     res.sendFile('index.html', {root: './views/'});
 });
 
+router.get(config.baseUrl+'video', (req, res) => {
+    res.sendFile('video.html', {root: './views/'});
+});
+
 module.exports = router
