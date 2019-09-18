@@ -20,21 +20,11 @@
         $(document).ready(function () {
             $('#videoPlayer').html('<source src="http://' + location.hostname + ':8080/stream" type="video/mp4">')
         });
-
-        function onLoad(){
-            let sec = parseInt(document.location.search.substr(1));
-
-            if (!isNaN(sec)){
-                videPlayer.currentTime = sec;
-            }
-        }
     </script>
-
-
 </head>
 
 <body>
-    <video id="videoPlayer" controls onloadedmetadata="onLoad()">
+    <video id="videoPlayer" controls>
         
     </video>
 </body>
