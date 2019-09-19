@@ -25,13 +25,11 @@ function makeList(data) {
     $.each(data, function (attribute, val) {
         //checks if file, adds path and size to <li> element if true
         if (val.type == "file") {
-            /**
-            * TODO: Remove if else and playable/not playable
-            */
             if (val.size % 2 == 1){
-                newList.push(`<li class='video_file' video-file-path="${val.path}" video-file-size="${val.size}" video-file-extension="${val.extension}">`+val.name+' - playable');
-            } else {
-                newList.push(`<li class='video_file' video-file-path="${val.path}" video-file-size="${val.size}" video-file-extension="${val.extension}">`+val.name+' - not playable');
+                newList.push(`<li class='video_file' video-file-path="${val.path}"
+                             video-file-size="${val.size}"
+                             video-file-extension="${val.extension}">`+val.name);
+
             }
         } else {
             newList.push(`<li>` + val.name);
@@ -48,17 +46,7 @@ function clickHandler() {
     $('li').click(function (e) {
         e.stopPropagation();
         if ($(this).attr('video-file-size')){
-            /**
-             * temp solution before fix with filesize where video-file-size % == 0 in backend
-             * 
-             * TODO: 
-             * 1.remove if/else once support for problem described is implemented
-             */
-            if ($(this).attr('video-file-size') % 2 == 1){
-                startStream($(this).attr('video-file-size'), $(this).attr('video-file-path'), $(this).attr('video-file-extension'));
-            } else {
-                alert("bug with filesize, fix inc...");
-            }
+            startStream($(this).attr('video-file-size'), $(this).attr('video-file-path'), $(this).attr('video-file-extension'));
         }
         if(this.getElementsByTagName("ul")[0] !== undefined){
             if (this.getElementsByTagName("ul")[0].style.display == "block") {
@@ -70,7 +58,6 @@ function clickHandler() {
     });
 }
 
-//TODO: implement video tag in index.html and feed the stream to tag
 function startStream(size, path, extension){
     $.ajax({
         url: '/setFileVariables',
@@ -82,7 +69,7 @@ function startStream(size, path, extension){
             video_file_extension: extension
         }),
         success: function(data, textStatus, jqXHR) {
-            window.location.href = window.location.origin+'/video'
+                window.location.href = window.location.origin+'/video?'+data
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.responseText);
