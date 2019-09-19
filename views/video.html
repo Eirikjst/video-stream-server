@@ -18,15 +18,19 @@
     <script src="libs/jquery-3.4.1.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#videoPlayer').html('<source src="http://' + location.hostname + ':8080/stream" type="video/mp4">')
+            let player = "";
+            if (window.location.search.substring(1) == 'mp4') {
+                player = '<source src="http://' + location.hostname + ':8080/stream" type="video/mp4">';
+            } else {
+                player = '<source src="http://' + location.hostname + ':8080/stream" type="video/webm">';
+            }
+            $('#videoPlayer').append(player);
         });
     </script>
 </head>
 
 <body>
-    <video id="videoPlayer" controls>
-        
-    </video>
+    <video id="videoPlayer" controls></video>
 </body>
 
 </html>
